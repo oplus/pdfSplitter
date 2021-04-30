@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PDF File Splitter</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<style type="text/css">
+		/* Sticky footer styles
+		-------------------------------------------------- */
+		html {
+			position: relative;
+			min-height: 100%;
+		}
+		body {
+			margin-bottom: 60px; /* Margin bottom by footer height */
+		}
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 60px; /* Set the fixed height of the footer here */
+			line-height: 60px; /* Vertically center the text there */
+			background-color: #f5f5f5;
+		}
+
+		.container {
+			width: auto;
+			max-width: 680px;
+			padding: 0 15px;
+		}
+
+		h1 {
+			color: #e76f51;
+		}
+
+	</style>
+</head>
+<body>
+
+	<!-- Begin page content -->
+    <main role="main" class="container">
+      <h1 class="mt-5">PDF File Splitter</h1>
+      <ol>
+      	
+      	<li>Upload the pdf file;</li>
+      	<li>Insert start and end page numbers;</li>
+      	<li>Click split;</li>
+      	<li>Download splitted file.</li>
+      </ol>
+
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="custom-file mt-2">
+			<input type="file" class="custom-file-input" name="fileName" accept="application/pdf" required>
+			<label class="custom-file-label" for="customFile">Choose file</label>
+		</div>
+		<div class="centered mt-2">
+				<input type="number" name="from" placeholder="From" required>
+				<input type="number" name="to" placeholder="To" required>
+				<button type="Submit" class="btn btn-primary float-right">Upload & Split</button>
+		</div>
+
+	</form>
+
+	{% if splitted_file_url %}
+		<hr>
+		<br>
+		<p class="alert alert-secondary">Download splitted file:   <a href="{{ splitted_file_url }}">{{ splitted_file_name}}</a></p>
+		<div class="progress mt-2 d-none">
+		
+	{% endif %}
+
+
+
+
+      
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted" style="overflow: auto;">By <a href="https://github.com/oplus">Abdalla Ahmed</a>
+        	Contact me: <a href="mailto:a.a.devmail@gmail.com">a.a.devmail@gmail.com</a>
+        </span>
+
+      </div>
+    </footer>
+    <script>
+	$(".custom-file-input").on("change", function() {
+	var fileName = $(this).val().split("\\").pop();
+	$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+	</script> 
+
+</body>
+</html>
